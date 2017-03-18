@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>WADWolfram - Inicio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Wolfram.org" />
+    <!-- css -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/plugins/flexslider/flexslider.css" rel="stylesheet" media="screen" />
+    <link href="/css/cubeportfolio.min.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+
+    <!-- Theme skin -->
+    <link id="t-colors" href="/skins/default.css" rel="stylesheet" />
+
+    <!-- boxed bg -->
+    <link id="bodybg" href="/bodybg/bg1.css" rel="stylesheet" type="text/css" />
+
+    <!-- =======================================================
+    Author: Group13. 2017
+======================================================= -->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <!-- start header -->
+        <header>
+            <nav>
+                <div class="navbar navbar-default navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/"><img src="/img/logo.png" alt="Logotipo de la asociación" width="199" height="52" /></a>
+                        </div>
+                        <div class="navbar-collapse collapse ">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="/">Inicio</a></li>
+                                <li><a href="/projects">Proyectos</a></li>
+
+                                <li><a href="/blog">Noticias</a></li>
+                                <!--	<li><a href="post-rightsidebar.html">Post right sidebar</a></li> -->
+
+                                <li><a href="/contact">Contacto</a></li>
+                                <li><a href="/about">Sobre sus desarrolladores</a></li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Cuenta <i class="fa fa-angle-down"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/register">Únete</a></li>
+                                        <li><a href="/login">Inicia sesión/Mi Cuenta</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- end header -->
+
+
+
+        <section id="featured" class="bg">
+
+            <!-- start slider -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Slider -->
+                        <div id="main-slider" class="main-slider flexslider">
+                            <ul class="slides">
+                                {{#projects}}
+                                <li>
+                                    <img src="/imagep/{{id}}.jpg" alt="Foto del proyecto" />
+                                    <div class="flex-caption">
+                                        <h3>{{title}}</h3>
+                                        <p>{{shortDescription}}</p>
+                                        <!--cambiar lo de arriba-->
+                                        <a href="/project?id={{id}}" class="btn btn-theme">Leer más</a>
+                                    </div>
+                                </li>
+
+                                {{/projects}}
+                            </ul>
+                        </div>
+                        <!-- end slider -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-6">
+                                <h4>Sobre nuestra asociación</h4>
+                                <p>
+                                    Bienvenido a la página web donde podrás hacer tu aportación económica a proyectos médicos dirigidos a personas que padecen el Síndrome de Wolfram. Además, podrás hacer un seguimiento general de todos los proyectos y, por supuesto, de aquellos en los que has aportado. Regístrate de manera gratuíta para poder contribuir con la asociación. Para más información haz <a href="/about">click aquí</a>.
+                                </p>
+                                <br/>
+
+                                <h4>Colabora con nuestros proyectos</h4> {{#percentages}}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="{{percentage}}" aria-valuetext="{{title}}: {{percentage}}%" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        {{title}}: {{percentage}}
+                                    </div>
+                                </div>
+                                {{/percentages}}
+                                <div class="flex-caption">
+                                    <a href="/projects" class="btn btn-theme">¡Anímate y participa!</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-6">
+                                <div class="widget" style="margin-left: 120px;">
+                                    <h4 class="widgetheading">Noticias de interés</h4>
+                                    <ul class="recent">
+                                        {{#news}}
+                                        <li>
+                                            <a href="/new?id={{id}}"> <img src="/image/{{id}}.jpg" class="pull-left" alt="Foto de la noticia" /></a>
+                                            <h6><a href="/new?id={{id}}">{{title}}</a></h6>
+                                        </li>
+                                        {{/news}}
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Estamos en: </h4>
+                            <address>
+					<strong>Asociación Española para la Investigación y Ayuda al Síndrome de Wolfram</strong><br>
+					 C/ Picadilly, nº 7, Almería, Andalucía</address>
+                            <p>
+                                <i class="icon-phone"></i>653 115 307
+                                <br>
+                                <i class="icon-envelope-alt"></i> email@domainname.com
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Información</h4>
+                            <ul class="link-list">
+                                <li><a href="#">Términos y condiciones</a></li>
+                                <li><a href="#">Política de privacidad</a></li>
+                                <li><a href="/contact">Contáctanos</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Páginas relacionadas</h4>
+                            <ul class="link-list">
+                                <li><a href="http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=ES&Expert=3463.0" target="_blank">ORPHANET – Síndrome de Wolfram</a></li>
+                                <li><a href="http://www.association-du-syndrome-de-wolfram.org/faire-un-don.html" target="_blank">Asociación Francesa del síndrome de Wolfram</a></li>
+                                <li><a href="http://wolframsyndrome.dom.wustl.edu/" target="_blank">Universidad de Washington en St. Louis – Síndrome de Wolfram</a></li>
+                                <li><a href="http://aswolfram.org/" target="_blank">Asociación Española para la Investigación y Ayuda al síndrome de Wolfram</a></li>
+                                <li><a href="http://www.eurordis.org/es/content/un-nuevo-registro-para-las-diabetes-raras" target="_blank">EURORDIS – Un nuevo registro para las diabetes raras</a></li>
+                                <li><a href="http://www.euro-wabb.org/es/" target="_blank">EURO-WABB</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Idioma</h4>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sub-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="copyright">
+                                <p>&copy; Sailor Theme - All Right Reserved</p>
+                                <div class="credits">
+
+                                    <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/modernizr.custom.js"></script>
+    <script src="/js/jquery.easing.1.3.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/plugins/flexslider/jquery.flexslider-min.js"></script>
+    <script src="/plugins/flexslider/flexslider.config.js"></script>
+    <script src="/js/jquery.appear.js"></script>
+    <script src="/js/stellar.js"></script>
+    <script src="/js/classie.js"></script>
+    <script src="/js/uisearch.js"></script>
+    <script src="/js/jquery.cubeportfolio.min.js"></script>
+    <script src="/js/google-code-prettify/prettify.js"></script>
+    <script src="/js/animate.js"></script>
+    <script src="/js/custom.js"></script>
+</body>
+
+</html>

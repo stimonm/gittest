@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>WADWolfram - Proyecto </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Wolfram.org" />
+    <!-- css -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/plugins/flexslider/flexslider.css" rel="stylesheet" media="screen" />
+    <link href="/css/cubeportfolio.min.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/user.css" rel="stylesheet" />
+
+    <!-- Theme skin -->
+    <link id="t-colors" href="/skins/default.css" rel="stylesheet" />
+
+    <!-- boxed bg -->
+    <link id="bodybg" href="/bodybg/bg1.css" rel="stylesheet" type="text/css" />
+
+
+    <script src="/js/jquery.min.js "></script>
+    <script src="/js/modernizr.custom.js "></script>
+    <script src="/js/jquery.easing.1.3.js "></script>
+    <script src="/js/bootstrap.min.js "></script>
+    <script src="/plugins/flexslider/jquery.flexslider-min.js "></script>
+    <script src="/plugins/flexslider/flexslider.config.js "></script>
+    <script src="/js/jquery.appear.js "></script>
+    <script src="/js/stellar.js "></script>
+    <script src="/js/classie.js "></script>
+    <script src="/js/uisearch.js "></script>
+    <script src="/js/jquery.cubeportfolio.min.js "></script>
+    <script src="/js/google-code-prettify/prettify.js "></script>
+    <script src="/js/animate.js "></script>
+    <script src="/js/custom.js "></script>
+    <script src="/js/user.js"></script>
+
+</head>
+
+<body>
+
+
+
+    <div id="wrapper">
+        <!-- start header -->
+        <header>
+
+            <div class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/"><img src="/img/logo.png" alt="" width="199" height="52" /></a>
+                    </div>
+                    <div class="navbar-collapse collapse ">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/">Inicio</a></li>
+                            <li  class="active"><a href="/projects">Proyectos </a></li>
+                            <li><a href="/blog">Noticias </a></li>
+                            <li><a href="/contact">Contacto </a></li>
+                            <li><a href="/about">Sobre sus desarrolladores </a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Cuenta <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/register">Únete</a></li>
+                                    <li><a href="/login">Inicia sesión/ Mi cuenta</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+                <section id="inner-headline">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="breadcrumb">
+                                <li><a href="/"><i class="fa fa-home"></i> Volver al Inicio</a><i class="icon-angle-right"></i></li>
+                                <li><a href="/projects">Proyectos</a></li>
+                                <li class="active">Proyecto</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </header>
+        <!-- end header -->
+
+        <section id="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <div class="inside">
+                                {{#Project}}
+                                <h1>{{title}}</h1>
+                                <div class="row" id="proyectPage">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div id="profilePhoto">
+                                                <img src="/imagep/{{id}}.jpg" id="proyectImage" class="img-responsive" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="information">
+                                                <p class="text-justify">{{description}} </p>
+
+                                            </div>
+                                            <form method="post" action="/pay?projectId={{id}}">
+                                                <button type="submit" class="btn btn-primary btn-lg "> ¡Participa!</button>
+                                            <input type="hidden" name="_csrf" value="{{token}}"/>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        {{#opened}}
+                                        <table class="table table-bordered table-striped ">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Presupuesto total</th>
+                                                    <td>{{totalBudget}} euros</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Presupuesto concedido</th>
+                                                    <td>{{parcialBudget}} euros</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Financiación pendiente</th>
+                                                    <td>{{restBudget}} euros</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Duración</th>
+                                                    <td>{{time}} meses</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Año de inicio</th>
+                                                    <td>{{startYear}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        {{/opened}}
+                                    </div>
+                                </div>
+                                {{/Project}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+         <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Estamos en: </h4>
+                            <address>
+					<strong>Asociación Española para la Investigación y Ayuda al Síndrome de Wolfram</strong><br>
+					 C/ Picadilly, nº 7, Almería, Andalucía</address>
+                            <p>
+                                <i class="icon-phone"></i>653 115 307
+                                <br>
+                                <i class="icon-envelope-alt"></i> email@domainname.com
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Información</h4>
+                            <ul class="link-list">
+                                <li><a href="#">Términos y condiciones</a></li>
+                                <li><a href="#">Política de privacidad</a></li>
+                                <li><a href="/contact">Contáctanos</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Páginas relacionadas</h4>
+                            <ul class="link-list">
+                                <li><a href="http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=ES&Expert=3463.0" target="_blank">ORPHANET – Síndrome de Wolfram</a></li>
+                                <li><a href="http://www.association-du-syndrome-de-wolfram.org/faire-un-don.html" target="_blank">Asociación Francesa del síndrome de Wolfram</a></li>
+                                <li><a href="http://wolframsyndrome.dom.wustl.edu/" target="_blank">Universidad de Washington en St. Louis – Síndrome de Wolfram</a></li>
+                                <li><a href="http://aswolfram.org/" target="_blank">Asociación Española para la Investigación y Ayuda al síndrome de Wolfram</a></li>
+                                <li><a href="http://www.eurordis.org/es/content/un-nuevo-registro-para-las-diabetes-raras" target="_blank">EURORDIS – Un nuevo registro para las diabetes raras</a></li>
+                                <li><a href="http://www.euro-wabb.org/es/" target="_blank">EURO-WABB</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Idioma</h4>
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sub-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="copyright">
+                                <p>&copy; Sailor Theme - All Right Reserved</p>
+                                <div class="credits">
+
+                                    <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <a href="# " class="scrollup "><i class="fa fa-angle-up active "></i></a>
+
+
+
+
+</body>
+
+</html>

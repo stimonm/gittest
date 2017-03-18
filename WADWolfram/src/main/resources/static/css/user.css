@@ -1,0 +1,11 @@
+#btn_sesion {
+    margin-top: 0.7%;
+}
+
+#navBarModified {
+    background: url(../img/bodybg/bg1.png) no-repeat top center;
+}
+
+#navBarModified a {
+    color: white;
+}

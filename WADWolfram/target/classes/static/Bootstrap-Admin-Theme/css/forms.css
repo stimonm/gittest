@@ -1,0 +1,18 @@
+#form-horizontal2 {
+    border-right-style: solid;
+    border-right-color: cadetblue;
+    border-right-width: medium;
+    padding-right: 15px;
+}
+
+#futerdaun {
+    position: absolute;
+    clear: both;
+    bottom: 0;
+}
+
+#botoni {
+    position: relative;
+    top: 10px;
+    margin-bottom: 20px;
+}

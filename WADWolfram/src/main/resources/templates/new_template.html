@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>WADWolfram - Noticias </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Wolfram.org" />
+        <!-- css -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/plugins/flexslider/flexslider.css" rel="stylesheet" media="screen" />
+        <link href="/css/cubeportfolio.min.css" rel="stylesheet" />
+        <link href="/css/style.css" rel="stylesheet" />
+        <link href="/css/user.css" rel="stylesheet" />
+
+        <!-- Theme skin -->
+        <link id="t-colors" href="/skins/default.css" rel="stylesheet" />
+
+        <!-- boxed bg -->
+        <link id="bodybg" href="/bodybg/bg1.css" rel="stylesheet" type="text/css" />
+
+
+        <script src="/js/jquery.min.js "></script>
+        <script src="/js/modernizr.custom.js "></script>
+        <script src="/js/jquery.easing.1.3.js "></script>
+        <script src="/js/bootstrap.min.js "></script>
+        <script src="/plugins/flexslider/jquery.flexslider-min.js "></script>
+        <script src="/plugins/flexslider/flexslider.config.js "></script>
+        <script src="/js/jquery.appear.js "></script>
+        <script src="/js/stellar.js "></script>
+        <script src="/js/classie.js "></script>
+        <script src="/js/uisearch.js "></script>
+        <script src="/js/jquery.cubeportfolio.min.js "></script>
+        <script src="/js/google-code-prettify/prettify.js "></script>
+        <script src="/js/animate.js "></script>
+        <script src="/js/custom.js "></script>
+        <script src="/js/user.js"></script>
+
+    </head>
+
+    <body>
+
+        <div id="wrapper">
+            <!-- start header -->
+            <header>
+                <div class="navbar navbar-default navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/"><img src="/img/logo.png" alt="" width="199" height="52" /></a>
+                        </div>
+                        <div class="navbar-collapse collapse ">
+                            <ul class="nav navbar-nav">
+                                <li><a href="/">Inicio</a></li>
+                                <li><a href="/projects">Proyectos </a></li>
+                                <li  class="active"><a href="/blog">Noticias </a></li>
+                                <li><a href="/contact">Contacto </a></li>
+                                <li><a href="/about">Sobre nosotros </a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Cuenta <i class="fa fa-angle-down"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/register">Únete</a></li>
+                                        <li><a href="/login">Inicia sesión/ Mi cuenta</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <section id="inner-headline">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="breadcrumb">
+                                    <li><a href="/"><i class="fa fa-home"></i> Volver al Inicio</a><i class="icon-angle-right"></i></li>
+                                    <li><a href="/blog">Noticias</a></li>
+                                    <li class="active">Noticia</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </header>
+
+            <!-- end header -->
+
+            <section id="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            {{#new}}
+                            <article id="sindromeWolfram">
+
+                                <div class="post-image">
+                                    <div class="post-heading">
+                                        <h3>{{title}}</h3>
+                                    </div>
+                                    <img src="/image/{{id}}.jpg" alt="Foto de la noticia" class="img-responsive" />
+                                </div>
+                                <p>{{cuerpo}}</p>
+
+                                <div class="bottom-article">
+
+                                    <ul class="meta-post">
+                                        <li><i class="fa fa-calendar"></i>{{date}}</li>
+                                        <li><i class="fa fa-comments"></i>{{number_comments}} Comentarios</li>
+                                    </ul>
+
+
+                                    <br>
+                                    <br>
+                                    
+                                        {{#lcomentarios}}
+                                        <div class="well">
+                                            <p>{{.}}</p>
+                                            
+                                        </div>
+                                        <br>
+                                        {{/lcomentarios}}
+                                    
+
+
+
+                                </div>
+
+                            </article>
+                            {{/new}}
+                            <div class="clear"></div>
+                            <div class="marginbot30"></div>
+                            <h4>Deja tu comentario</h4>
+                            {{#logeado}}
+                            <h5 style="color: red"><strong> ¡Debes iniciar sesión para poder comentar! </strong></h5>
+                            <br>
+                            <br>
+                            <a href="/login">Inicia sesión</a>
+                            {{/logeado}}
+                            {{#logeado2}}
+                            <form role="form" action="/comment/upload/{{id}}" method="post">
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="8" placeholder="Comenta aquí" name="comentarios"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-theme btn-md">Comentar</button>
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                            </form>
+                            {{/logeado2}}
+                        </div>
+                        <div class="col-lg-4">
+                            <aside class="right-sidebar">
+                                <div class="widget">
+
+                                </div>
+                                <div class="widget">
+                                    <h3>Categorías</h3>
+                                    <ul class="cat">
+                                        <li><i class="fa fa-angle-right"></i>Enfermedad</li>
+                                        <li><i class="fa fa-angle-right"></i>Asociación</li>
+                                        <li><i class="fa fa-angle-right"></i>Nuevos descubrimientos</li>
+                                        <li><i class="fa fa-angle-right"></i>Proyectos</li>
+                                        <li><i class="fa fa-angle-right"></i>Próximos eventos</li>
+                                    </ul>
+                                </div>
+                                <div class="widget">
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-3 col-lg-3">
+                            <div class="widget">
+                                <h4>Estamos en: </h4>
+                                <address>
+                                    <strong>Asociación Española para la Investigación y Ayuda al Síndrome de Wolfram</strong><br>
+                                    C/ Picadilly, nº 7, Almería, Andalucía</address>
+                                <p>
+                                    <i class="icon-phone"></i>653 115 307
+                                    <br>
+                                    <i class="icon-envelope-alt"></i> email@domainname.com
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-lg-3">
+                            <div class="widget">
+                                <h4>Información</h4>
+                                <ul class="link-list">
+                                    <li><a href="#">Términos y condiciones</a></li>
+                                    <li><a href="#">Política de privacidad</a></li>
+                                    <li><a href="/contact">Contáctanos</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-3 col-lg-3">
+                            <div class="widget">
+                                <h4>Páginas relacionadas</h4>
+                                <ul class="link-list">
+                                   <li><a href="http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=ES&Expert=3463.0" target="_blank">ORPHANET – Síndrome de Wolfram</a></li>
+                                <li><a href="http://www.association-du-syndrome-de-wolfram.org/faire-un-don.html" target="_blank">Asociación Francesa del síndrome de Wolfram</a></li>
+                                <li><a href="http://wolframsyndrome.dom.wustl.edu/" target="_blank">Universidad de Washington en St. Louis – Síndrome de Wolfram</a></li>
+                                <li><a href="http://aswolfram.org/" target="_blank">Asociación Española para la Investigación y Ayuda al síndrome de Wolfram</a></li>
+                                <li><a href="http://www.eurordis.org/es/content/un-nuevo-registro-para-las-diabetes-raras" target="_blank">EURORDIS – Un nuevo registro para las diabetes raras</a></li>
+                                <li><a href="http://www.euro-wabb.org/es/" target="_blank">EURO-WABB</a></li>
+                             </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-lg-3">
+                            <div class="widget">
+                                <h4>Idioma</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="sub-footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="copyright">
+                                    <p>&copy; Sailor Theme - All Right Reserved</p>
+                                    <div class="credits">
+
+                                        <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <a href="# " class="scrollup "><i class="fa fa-angle-up active "></i></a>
+
+
+
+
+    </body>
+
+</html>

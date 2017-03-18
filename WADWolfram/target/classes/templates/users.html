@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>WADWolfram - Perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Wolfram.org" />
+    <!-- css -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/plugins/flexslider/flexslider.css" rel="stylesheet" media="screen" />
+    <link href="/css/cubeportfolio.min.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/user.css" rel="stylesheet" />
+
+    <!-- Theme skin -->
+    <link id="t-colors" href="/skins/default.css" rel="stylesheet" />
+
+    <!-- boxed bg -->
+    <link id="bodybg" href="/bodybg/bg1.css" rel="stylesheet" type="text/css" />
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/modernizr.custom.js"></script>
+    <script src="/js/jquery.easing.1.3.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/plugins/flexslider/jquery.flexslider-min.js"></script>
+    <script src="/plugins/flexslider/flexslider.config.js"></script>
+    <script src="/js/jquery.appear.js"></script>
+    <script src="/js/stellar.js"></script>
+    <script src="/js/classie.js"></script>
+    <script src="/js/uisearch.js"></script>
+    <script src="/js/jquery.cubeportfolio.min.js"></script>
+    <script src="/js/google-code-prettify/prettify.js"></script>
+    <script src="/js/animate.js"></script>
+    <script src="/js/custom.js"></script>
+    <script src="/js/user.js"></script>
+
+</head>
+
+<body>
+
+
+
+    <div id="wrapper">
+        <!-- start header -->
+        <header>
+
+            <div class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/"><img src="/img/logo.png" alt="" width="199" height="52" /></a>
+                    </div>
+                    <div class="navbar-collapse collapse ">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/">Inicio</a></li>
+                            <li><a href="/projects">Proyectos </a></li>
+                            <li><a href="/blog">Noticias </a></li>
+                            <li><a href="/contact">Contacto </a></li>
+                            <li><a href="/about">Sobre sus desarrolladores </a></li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Cuenta <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/user/close">Cerrar sesión/ Mi cuenta</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- end header -->
+
+        <section id="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <nav class="navbar navbar-default" role="navigation" id="navBarModified">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                                        <span class="sr-only">Desplegar navegación</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+
+                                <!-- Agrupar los enlaces de navegación, los formularios y cualquier
+                               otro elemento que se pueda ocultar al minimizar la barra -->
+                                <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                                    <ul class="nav navbar-nav col-lg-10">
+                                        <li class="active" id="iteMyProyects"><a href="#" onclick="javascript:changeShow(this)" id="myProyects">Mis proyectos</a></li>
+                                        <li id="iteMyMovements"><a href="#" onclick="javascript:changeShow(this)" id="myMovements">Mis movimientos</a></li>
+                                        <li id="iteMyDatas"><a href="#" onclick="javascript:changeShow(this)" id="myDatas">Mis datos</a></li>
+                                    </ul>
+
+                                    <a href="/user/close" class="btn btn-info col-lg-2 " role="button" id="btn_sesion">Cerrar Sesión</a>
+
+                                </div>
+                            </nav>
+
+                            <div class="inside">
+                                <h1>¡Bienvenid@ {{username}}!</h1>
+                                <div class="row show" id="userProjects">
+                                    <div class="col-md-6">
+                                        <ul class="list-group">
+                                            <h2>Proyectos Colaborados</h2> {{#colaborateProjects}}
+                                            <li class="list-group-item">
+                                                <H3><a href="/project?id={{projectId}}">{{title}}</a></H3>
+                                                <p>{{shortDescription}}</p>
+                                                <p>{{money}}</p>
+                                            </li>
+                                            {{/colaborateProjects}}
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-group">
+                                            <h2>Otros Proyectos Activos</h2> {{#otherProjects}}
+                                            <li class="list-group-item">
+                                                <H3><a href="">{{title}}</a></H3>
+                                                <p>{{shortDescription}}</p>
+                                            </li>
+                                            {{/otherProjects}}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row hide" id="donateProyects">
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <th class="col-md-8">Proyecto</th>
+                                                <th class="col-md-2">Cantidad</th>
+                                                <th class="col-md-2">Fecha</th>
+                                            </thead>
+                                            <tbody>{{#movements}}
+                                                <tr>
+                                                    <td><a href="#">{{projectTitle}}</a></td>
+                                                    <td>{{money}}</td>
+                                                    <td>{{date}}</td>
+                                                </tr>
+                                                {{/movements}}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row hide" id="dataPage">
+                                    {{#User}}
+                                    <form role="form" class="register-form" action="/users/update/{{id}}" method="post" enctype="multipart/form-data">
+                                         
+                                        <div class="col-md-6">
+                                            <div id="profilePhoto">
+
+                                                <img src="/imageu/{{id}}.jpg" id="profileIcon" class="img-responsive" />
+                                                <div class="form-group">
+                                                    <label for="exampleInputFile">Cambiar foto</label>
+                                                    <input type="file" id="exampleInputFile" class="center-block" name="imagen">
+                                                    <p class="help-block">Seleccionar nueva foto</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="data">
+                                                <div >
+                                                    <label for="exampleInputEmail1">Nombre</label>
+                                                    <input readonly class="form-control" id="exampleInputEmail1" placeholder="{{name}}" name="name">
+                                                   
+                                                </div>
+                                                <div >
+                                                    <label for="exampleInputEmail1">Apellidos</label>
+                                                    <input readonly class="form-control" id="exampleInputEmail1"  name="surname" placeholder="{{surname}}">
+                                                  
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Dirección Email</label>
+                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="{{email}}" name="email">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Nombre Usuario</label>
+                                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="{{userName}}" name="username">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Antigua Contraseña</label>
+                                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" name="oldPassword" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Nueva Contraseña</label>
+                                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña nueva" name="newPassword" >
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary btn-lg">Guardar Cambios</button>
+                                             
+                                            </div>
+                                        </div>
+                                         
+                                    </form>
+                                    {{/User}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Estamos en: </h4>
+                            <address>
+					<strong>Asociación Española para la Investigación y Ayuda al Síndrome de Wolfram</strong><br>
+					 C/ Picadilly, nº 7, Almería, Andalucía</address>
+                            <p>
+                                <i class="icon-phone"></i>653 115 307
+                                <br>
+                                <i class="icon-envelope-alt"></i> email@domainname.com
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Información</h4>
+                            <ul class="link-list">
+                                <li><a href="#">Términos y condiciones</a></li>
+                                <li><a href="#">Política de privacidad</a></li>
+                                <li><a href="contact.html">Contáctanos</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Páginas relacionadas</h4>
+                            <ul class="link-list">
+                               <li><a href="http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=ES&Expert=3463.0" target="_blank">ORPHANET – Síndrome de Wolfram</a></li>
+                                <li><a href="http://www.association-du-syndrome-de-wolfram.org/faire-un-don.html" target="_blank">Asociación Francesa del síndrome de Wolfram</a></li>
+                                <li><a href="http://wolframsyndrome.dom.wustl.edu/" target="_blank">Universidad de Washington en St. Louis – Síndrome de Wolfram</a></li>
+                                <li><a href="http://aswolfram.org/" target="_blank">Asociación Española para la Investigación y Ayuda al síndrome de Wolfram</a></li>
+                                <li><a href="http://www.eurordis.org/es/content/un-nuevo-registro-para-las-diabetes-raras" target="_blank">EURORDIS – Un nuevo registro para las diabetes raras</a></li>
+                                <li><a href="http://www.euro-wabb.org/es/" target="_blank">EURO-WABB</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="widget">
+                            <h4>Idioma</h4>
+                            <!--   <div class="form-group multiple-form-group input-group">
+                        <input type="email" name="email" class="form-control">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-theme btn-add">Subscribe</button>
+                        </span>
+                    </div>  -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sub-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="copyright">
+                                <p>&copy; Sailor Theme - All Right Reserved</p>
+                                <div class="credits">
+
+                                    <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+
+
+
+
+</body>
+
+</html>
