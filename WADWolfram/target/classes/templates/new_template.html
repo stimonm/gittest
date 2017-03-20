@@ -145,6 +145,7 @@
                                     <textarea class="form-control" rows="8" placeholder="Comenta aquí" name="comentarios"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-theme btn-md">Comentar</button>
+                                <input type="hidden" name="_csrf" value="{{token}}"/>
                             </form>
                             {{/logeado2}}
                         </div>

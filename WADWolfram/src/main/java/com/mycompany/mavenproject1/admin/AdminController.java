@@ -126,9 +126,9 @@ public class AdminController {
         }
        
 
-        if (! upd.getOldPassword().equals(mpassword)) {
-            return "error2";
-        }
+        //if (! upd.getOldPassword().equals(mpassword)) {
+        //    return "error2";
+        //}
         
         if (!mnew_password.isEmpty() && mnew_password.isEmpty()){
             return "error2";
@@ -139,9 +139,11 @@ public class AdminController {
         
 
         if (!mnew_password.isEmpty() && !mrepeat_password.isEmpty()) {
-            if (mnew_password.equals(mrepeat_password)) {
-                upd.setOldPassword(mnew_password);
-                upd.setNewPassword(mnew_password);
+        	////REVISADME ESTA LINEA Y QUE SEA CON NEW Y NO CON REPEAT
+            if (upd.matchPassword(mnew_password)) {
+                //upd.setOldPassword(mnew_password);
+                //upd.setNewPassword(mnew_password);
+            	upd.setPasswordHash(mnew_password);
             } else {
                 return "error2";
             }

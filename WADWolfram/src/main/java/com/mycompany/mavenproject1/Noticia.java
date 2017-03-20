@@ -29,8 +29,7 @@ public class Noticia {
     private ArrayList<String> comentarios;
     private Date date;
 
-//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//Date d = sdf.parse("21/12/2012");
+
     public Noticia() {
     }
 
@@ -89,9 +88,7 @@ public class Noticia {
         this.title = title;
     }
 
-    /*public void setRutaImagen(MultipartFile ruta_imagen) {
-     this.ruta_imagen = ruta_imagen;
-     }*/
+   
     public void setCuerpo(String cuerpo) {
         this.cuerpo = cuerpo;
     }

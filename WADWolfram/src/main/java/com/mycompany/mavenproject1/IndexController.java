@@ -48,14 +48,7 @@ public class IndexController {
 		 m.addAttribute("percentages",percentages);
 		return "index_template";
 	}
-
-	/*
-	 * @RequestMapping ("/projects") public String ShowProjects(Model m){ return
-	 * "projects_template"; }
-	 * 
-	 * @RequestMapping ("/blog") public String ShowBlog(Model m){ return
-	 * "blog_template"; }
-	 */
+	
 	@RequestMapping("/contact")
 	public String ShowContact(Model m) {
 		return "contact";

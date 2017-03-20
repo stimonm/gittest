@@ -52,22 +52,6 @@ public class Project {
   this.donations=new ArrayList<>();
 	}
 
-	/*public Project(long id,String title, String shortDescription, String description, double totalBudget, double parcialBudget, double time, boolean opened, Date releaseDate, int startYear, String image) {
-        super();
-        this.id = id;
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.description = description;
-        this.totalBudget = totalBudget;
-        this.parcialBudget = parcialBudget;
-        this.restBudget = totalBudget - parcialBudget;
-        this.time = time;
-        this.opened = opened;
-        this.releaseDate = releaseDate;
-        this.startYear = startYear;
-        this.image = image;
-    }*/
-
     public long getId() {
         return id;
     }
@@ -177,24 +161,7 @@ public class Project {
       setParcialBudget(parcialBudget+d.getMoney());
      }
 
-	/*@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "Project [id=" + id + 
-				", title="+title
-				+", shortDescription" + shortDescription
-				+", description" + description
-				+", totalBudget" + totalBudget
-				+", parcialBudget" + parcialBudget
-				+", restBudget" + restBudget
-				+", time" + time
-				+", opened" + opened
-				+", releaseDate" + releaseDate
-				+", startYear" + startYear
-				+", image" + image;
-	}*/
-
-  public int calculateProgressPercentage(){
+	  public int calculateProgressPercentage(){
     return (int)(parcialBudget*100/totalBudget);
   }    
 }

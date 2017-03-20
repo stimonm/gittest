@@ -65,7 +65,12 @@
                             <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Cuenta <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/user/close">Cerrar sesión/ Mi cuenta</a></li>
+                                    <li> 
+                                    	<form action="/user/close" method="post">
+                                    	<input type="submit" class="btn btn-info" value="Cerrar sesión" />  
+                                    	<input type="hidden" name="_csrf" value="{{token}}"/>                                  
+                                    	</form>
+                                    </li>                                    
                                 </ul>
                             </li>
                         </ul>
@@ -99,8 +104,11 @@
                                         <li id="iteMyMovements"><a href="#" onclick="javascript:changeShow(this)" id="myMovements">Mis movimientos</a></li>
                                         <li id="iteMyDatas"><a href="#" onclick="javascript:changeShow(this)" id="myDatas">Mis datos</a></li>
                                     </ul>
-
-                                    <a href="/user/close" class="btn btn-info col-lg-2 " role="button" id="btn_sesion">Cerrar Sesión</a>
+									  <form action="/user/close" method="post">
+                                    	<input type="submit" class="btn btn-info col-lg-2" id="btn_sesion" value="Cerrar sesión" />  
+                                    	<input type="hidden" name="_csrf" value="{{token}}"/>                                  
+                                    </form>
+                                    
 
                                 </div>
                             </nav>

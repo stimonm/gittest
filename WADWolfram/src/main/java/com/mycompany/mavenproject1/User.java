@@ -24,23 +24,6 @@ public class User {
 	
  protected User(){}	
 
-	/*public User(List<Project> colaborateProjects, List<Project> otherProjects,
-			List<Donation> donations, UserPersonalData user, List<String> roles) {
-		this.colaborateProjects = colaborateProjects;
-		this.otherProjects = otherProjects;
-		this.donations=donations;
-		this.user = user;
-  this.roles=roles;
-	}*/
-
-    /*public User(UserPersonalData user){
-		this.colaborateProjects = new ArrayList<>();
-		this.otherProjects = new ArrayList<>();
-		this.donations = new ArrayList<>();
-		this.user = user;
-  this.roles = new ArrayList<>();
-	}*/
-
 	public List<UserProject> getColaborateProjects() {
 		return colaborateProjects;
 	}
@@ -58,10 +41,6 @@ public class User {
 		this.colaborateProjects = colaborateProjects;
 	}
 
- /*public void addColaborateProjects(Project p){
-   colaborateProjects.add(p);
- }*/
-
 	public List<UserProject> getOtherProjects() {
 		return otherProjects;
 	}
@@ -69,10 +48,6 @@ public class User {
 	public void setOtherProjects(List<UserProject> otherProjects) {
 		this.otherProjects = otherProjects;
 	}
-
-/* public void addOtherProject(Project p){
-   otherProjects.add(p);
- }*/
 
 	public List<UserMovements> getDonations(){
 		return donations;
@@ -82,10 +57,6 @@ public class User {
 		this.donations=donations;
 	}
 
- /*public void addDonation(Donation d){
-   donations.add(d);
- }*/
-
 	public UserPersonalData getUser() {
 		return user;
 	}
@@ -94,13 +65,4 @@ public class User {
 		this.user = user;
 	}	
 
-   /* public List<String> getRoles(){ 
-   return roles;
- }
- public void setRoles(List<String> roles){
-   this.roles=roles;
- }
- public void addRole(String r){
-   roles.add(r);
- }*/
 }

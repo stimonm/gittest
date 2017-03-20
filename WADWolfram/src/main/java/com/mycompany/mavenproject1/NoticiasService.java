@@ -1,4 +1,4 @@
-package com.mycompany.mavenproject1;
+﻿package com.mycompany.mavenproject1;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-@Controller
-public class NoticiasController {
+@Service
+public class NoticiasService {
 
     @Autowired
-    public NoticiasRepository noticias;
+    private NoticiasRepository noticias;
 
     private static final String FILES_FOLDER = "fileFolderNews";
 
@@ -46,74 +46,46 @@ public class NoticiasController {
         noticias.save(new Noticia("Noticia2", /*b,*/ "cuerpo2", 0, "eventos", coments, releaseDate));
     }
 
-    @RequestMapping(value = "/mostrarPorCategoria", method = RequestMethod.GET)
-    public String mostrarPorCategoria(Model model, @RequestParam String categoria) {
+    public ResponseEntity<ArrayList<Noticia>> mostrarPorCategoria(		@RequestParam String categoria) {
         ArrayList<Noticia> l = noticias.findByCategoria(categoria);
-        //  model.addAttribute("categoria", categoria);
-        model.addAttribute("news", l);
-        return "blog_template";
+        if (!l.isEmpty())
+        	   return new ResponseEntity<>(l, HttpStatus.OK);
+        else
+        	  return new ResponseEntity<>(HttpStatus.NOT_FOUND);        	
     }
 
-    @RequestMapping(value = "/blog", method = RequestMethod.GET)
-    public String mostrarTodas(Model model) {
+    public List<Noticia> mostrarTodas(Model model) {
         ArrayList<Noticia> l = noticias.findAll();
-        model.addAttribute("news", l);
-        return "blog_template";
+        return l;
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String mostrarUna(Model model, HttpSession sesion, @RequestParam long id) {
+    public ResponseEntity<Noticia> mostrarUna(@RequestParam long id) {
         Noticia n = noticias.findOne(id);
-        User s = (User) sesion.getAttribute("User");
-        model.addAttribute("new", n);
-        model.addAttribute("lcomentarios", n.getComentarios());
-        model.addAttribute("id", n.getId());
-        if(s==null){
-            model.addAttribute("logeado", true);
-        }else{
-            model.addAttribute("logeado2", true);
-        }
-        return "new_template";
+        if (n!=null)
+           return new ResponseEntity<>(n, HttpStatus.OK);
+        else
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/comment/upload/{id}", method = RequestMethod.POST) //put???
-    public String Comentar(Model model, HttpSession sesion, @RequestParam String comentarios, @PathVariable long id) {//pillamos id y el comentario
+    public ResponseEntity<Noticia> Comentar(HttpSession sesion, @RequestBody String comentario, @PathVariable long id) 
         Noticia n = noticias.findOne(id);    //pillamos la noticia de la bd
-      
-        ////CAMBIOS GABI
-        User s = (User) sesion.getAttribute("User");
-        if (s == null) {
-            return "login";
-        } else {
-            String nombre = s.user.getName();
-            nombre = nombre + " dice: \n" + comentarios + "\n";
-            n.getComentarios().add(nombre);
-
-            n.setNumber_comments(n.getNumComentarios() + 1);
-            noticias.save(n);
-            //n2.Comentar(comentarios, id);
-
-            model.addAttribute("new", n);
-            model.addAttribute("lcomentarios", n.getComentarios());
-            model.addAttribute("id", n.getId());
-            model.addAttribute("logeado2", true);
-            
-            return "new_template";
-        }
+        if (n!=null){
+           User s = (User) sesion.getAttribute("User");     
+           String nombre = s.user.getName();
+           nombre = nombre + " dice: \n" + comentario + "\n";
+           n.getComentarios().add(nombre);
+           n.setNumber_comments(n.getNumComentarios() + 1);
+           noticias.save(n);
+           return new ResponseEntity<>(n, HttpStatus.OK);
+       }
+       else
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);      
     }
 
-    @RequestMapping(value = "/admin/AddBlog/create", method = RequestMethod.POST)  //URL y method post necesarios.
-    public String addNewBlog(Model model, HttpSession sesion,@RequestParam String title, @RequestParam String categoria,
-            @RequestParam String fecha, @RequestParam("imagen") MultipartFile imagen, //@RP String hola, significa que en el form hay un input con name="hola"
-            @RequestParam String cuerpo, @RequestParam Boolean confirm) { ///Se le pasa como parámetros todos los input del form
-
-        Date date = new Date();  //Simulamos la hora actual
-        ArrayList<String> x = new ArrayList<>();
-        Noticia n = new Noticia(title, /*imagen,*/ cuerpo, categoria, x, date); //Creamos una noticia con todos los datos.
-
-        noticias.save(n);                                                               //Añadimos la noticia a la bbdd
-
-        String fileName = n.getId() + ".jpg";
+    @ResponseStatus(HttpStatus.CREATED)
+    public Noticia addNewBlog(@RequestBody noticia){
+        noticias.save(noticia);                                                               //Añadimos la noticia a la bbdd
+/*        String fileName = n.getId() + ".jpg";
         if (!imagen.isEmpty()) {
             try {
 
@@ -131,14 +103,11 @@ public class NoticiasController {
                 e.printStackTrace();
             }
         }
-        
-        User u = (User) sesion.getAttribute("User");
-        model.addAttribute("bienvenido",u.getUser().getUserName());
-        return "Bootstrap-Admin-Theme/index";           //WE ARE OUT!
-
+ */       
+//falta devolver noticia con id
+      return noticia;
     }
 
-    @RequestMapping("/image/{fileName}.jpg")
     public void handleFileDownload(@PathVariable String fileName,
             HttpServletResponse res) throws FileNotFoundException, IOException {
 

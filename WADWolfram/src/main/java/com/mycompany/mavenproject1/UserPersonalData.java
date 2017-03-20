@@ -26,8 +26,6 @@ public class UserPersonalData {
 	private String email;
 	private String userName;
 	private String oldPassword;
-	private String newPassword;
-//	private MultipartFile photo;
 	private String photo2;
 	private String passwordHash;
 	
@@ -40,9 +38,10 @@ public class UserPersonalData {
 			String newPassword, String photo2, String...roles) {
 		this.name = name;
 		this.surname = surname;
+		this.lastname = surname;
 		this.email = email;
 		this.userName = userName;
-		this.oldPassword = oldPassword;
+		//this.oldPassword = oldPassword;
 	//	this.newPassword = newPassword;
 		this.photo2 = photo2;
 		//this.roles = roles;
@@ -50,6 +49,9 @@ public class UserPersonalData {
 		this.roles = new ArrayList<>(Arrays.asList(roles));
 	}
    
+   	public boolean matchPassword(String pass){
+   		return new BCryptPasswordEncoder().matches(pass, passwordHash);
+   	}
 	public UserPersonalData() {
 	}
 
@@ -85,7 +87,7 @@ public class UserPersonalData {
 		this.userName = userName;
 	}
 
-	public String getOldPassword() {
+	/*public String getOldPassword() {
 		return oldPassword;
 	}
 
@@ -99,7 +101,7 @@ public class UserPersonalData {
 
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
-	}
+	}*/
 	
 	
 	public String getPhoto2() {
@@ -131,7 +133,7 @@ public class UserPersonalData {
 	}
 	
 	public void setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
+		this.passwordHash = new BCryptPasswordEncoder().encode(passwordHash);;
 	}
 
 	public List<String> getRoles() {
