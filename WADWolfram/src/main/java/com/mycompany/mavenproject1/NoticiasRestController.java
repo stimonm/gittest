@@ -1,4 +1,4 @@
-package com.mycompany.mavenproject1;
+﻿package com.mycompany.mavenproject1;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,17 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-@Controller
-public class NoticiasController {
+@RestController
+public class NoticiasRestController {
 
     @Autowired
     private NoticiasService service;
@@ -30,63 +33,50 @@ public class NoticiasController {
     private static final String FILES_FOLDER = "fileFolderNews";
 
     @RequestMapping(value = "/mostrarPorCategoria", method = RequestMethod.GET)
-    public String mostrarPorCategoria(Model model, @RequestParam String categoria) {
+    public ResponseEntity<ArrayList<Noticia>> mostrarPorCategoria(@RequestParam String categoria) {
         ArrayList<Noticia> l = service.mostrarPorCategoria(categoria);
-  
-        model.addAttribute("news", l);
-        return "blog_template";
+        if (!l.isEmpty())  
+           return new ResponseEntity<>(l, HttpStatus.OK);
+        else
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/blog", method = RequestMethod.GET)
-    public String mostrarTodas(Model model) {
+    public ArrayList<Noticia> mostrarTodas(	) {
         ArrayList<Noticia> l = service.mostrarTodas();
-        model.addAttribute("news", l);
-        return "blog_template";
+        return l;
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String mostrarUna(Model model, HttpSession sesion, @RequestParam long id) {
+    public ResponseEntity<Noticia> mostrarUna(HttpSession sesion, @RequestParam long id) {
         Noticia n = service.mostrarUna(id);
-        User s = (User) sesion.getAttribute("User");
-        model.addAttribute("new", n);
-        model.addAttribute("lcomentarios", n.getComentarios());
-        model.addAttribute("id", n.getId());
-        if(s==null){
-            model.addAttribute("logeado", true);
-        }else{
-            model.addAttribute("logeado2", true);
-        }
-        return "new_template";
+        if (n!=null)
+           	return new ResponseEntity<>(n, HttpStatus.OK);
+        else
+           	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/comment/upload/{id}", method = RequestMethod.POST) //put???
-    public String Comentar(Model model, HttpSession sesion, @RequestParam String comentarios, @PathVariable long id) {//pillamos id y el comentario
+    public ResponseEntity<Noticia> Comentar(HttpSession sesion, @RequestParam String comentarios, @PathVariable long id) {
         User s = (User) sesion.getAttribute("User");
         if (s == null) {
-            return "login";
+        	//aq:
+           	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } 
         else {
         	   Noticia n=service.comentar(s, comentarios, id);
-                      model.addAttribute("new", n);
-            model.addAttribute("lcomentarios", n.getComentarios());
-            model.addAttribute("id", n.getId());
-            model.addAttribute("logeado2", true);
-            
-            return "new_template";
+        	   if(n!=null)
+           		   return new ResponseEntity<>(n, HttpStatus.OK);
+        		   else
+           			   return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @RequestMapping(value = "/admin/AddBlog/create", method = RequestMethod.POST)  //URL y method post necesarios.
-    public String addNewBlog(Model model, HttpSession sesion,@RequestParam String title, @RequestParam String categoria,
-            @RequestParam String fecha, @RequestParam("imagen") MultipartFile imagen, //@RP String hola, significa que en el form hay un input con name="hola"
-            @RequestParam String cuerpo, @RequestParam Boolean confirm) { ///Se le pasa como parámetros todos los input del form
-
-        Date date = new Date();  //Simulamos la hora actual
-        ArrayList<String> x = new ArrayList<>();
-        Noticia n = new Noticia(title, /*imagen,*/ cuerpo, categoria, x, date); //Creamos una noticia con todos los datos.
-
-        n=service.addNewBlog(n);
-
+    @ResponseStatus(HttpStatus.CREATED)
+    public Noticia addNewBlog(HttpSession sesion, 		@RequestBody Noticia  noticia){
+        Noticia n=service.addNewBlog(noticia);
+        /*
         String fileName = n.getId() + ".jpg";
         if (!imagen.isEmpty()) {
             try {
@@ -105,13 +95,11 @@ public class NoticiasController {
                 e.printStackTrace();
             }
         }
-        
-        User u = (User) sesion.getAttribute("User");
-        model.addAttribute("bienvenido",u.getUser().getUserName());
-        return "Bootstrap-Admin-Theme/index";           //WE ARE OUT!
-
+  */
+       return n;
     }
-
+    
+/*
     @RequestMapping("/image/{fileName}.jpg")
     public void handleFileDownload(@PathVariable String fileName,
             HttpServletResponse res) throws FileNotFoundException, IOException {
@@ -128,12 +116,15 @@ public class NoticiasController {
                     + ") does not exist");
         }
     }
-
+*/
+    
     @RequestMapping(value = "/borrarNoticia", method = RequestMethod.POST)
-    public String deleteProject(@RequestParam long id, Model m, HttpSession sesion) {
-        service.deleteNew(id);
-        User u = (User) sesion.getAttribute("User");
-        m.addAttribute("bienvenido",u.getUser().getUserName());
-        return "Bootstrap-Admin-Theme/index";
+    public ResponseEntity<Noticia> deleteProject(@RequestParam long id, HttpSession sesion) {
+        Noticia n=service.deleteNew(id);
+        if(n!=null)
+           	return new ResponseEntity<>(n, HttpStatus.OK);
+        else
+           	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        
     }
 }

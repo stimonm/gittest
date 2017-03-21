@@ -28,50 +28,29 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProjectController {
 
 	@Autowired
-	private ProjectRepository projects;
-	@Autowired
-	private DonationsRepository movements;
+	private ProjectService service;
 	
 	private static final String FILES_FOLDER_PROJECTS = "files";
 
-	@PostConstruct
-	public void init() {
-		Date releaseDate = new Date();
-		projects.save(new Project("Titulo", "Breve Descripcion", "description", 500000.0, 0.0, 36, true, releaseDate, 2017,
-				"image"));
-		projects.save(new Project("Titulo2", "Breve Descripcion2", "description2", 600.0, 0.0, 36, true, releaseDate,
-				2017, "image"));
-	}
-
 	@RequestMapping("/project")
-	
 	public String viewProject(Model model, @RequestParam long id) {
-		Project p = projects.findOne(id);
+		Project p= service.viewProject(id);
 		model.addAttribute("Project", p);
 		return "oneProject";
 	}
 	
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String viewAllProjects(Model model) {
-		List<Project> l = projects.findAll();
+		List<Project> l =service.viewAllProjects();
 		model.addAttribute("projects", l);
 		return "projects_template";
 	}
 
-	
 	@RequestMapping(value = "/borrarProyecto", method = RequestMethod.POST)
 	public String deleteProject(@RequestParam long id,Model m, HttpSession sesion) {
-		Project p = projects.findOne(id);
-		
-		for (Donation d: p.getDonations()){
-			
-			movements.delete(d);
-		}
-		projects.delete(p);
-		
+service.deleteProject(id);	
 		User u= (User) sesion.getAttribute("User");
-		
-		m.addAttribute("bienvenido",u.getUser().getUserName());
+m.addAttribute("bienvenido",u.getUser().getUserName());
 		return "Bootstrap-Admin-Theme/index";
 	}
 	
@@ -79,7 +58,7 @@ public class ProjectController {
 	public String donate(Model m, long projectId, HttpSession sesion) {
 		// projectId es el id para reconocer al proyecto que se dona
 		User s = (User) sesion.getAttribute("User");
-		Project p=projects.findOne(projectId);
+		Project p=service.viewProject(projectId);
 		if (s != null) {
 			m.addAttribute("projectId",projectId);
 			m.addAttribute("RestBudget",p.getRestBudget());
@@ -88,19 +67,17 @@ public class ProjectController {
 		} else {
 			return "login";
 		}
-
 	}
 
 	@RequestMapping(value="/pay/projects", method=RequestMethod.POST)
 	public String donate(@RequestParam long projectId, HttpSession sesion, @RequestParam double money, Model model) {
-		Date d = new Date();
 		User s = (User) sesion.getAttribute("User");
-		Project p  = projects.findOne(projectId);
-		movements.save(new Donation(s.getUser(), p, money, d));
-		p.setParcialBudget(p.getParcialBudget()+money);
-		p.setRestBudget(p.getRestBudget()-money);
-		projects.save(p);
-		List<Project> l = projects.findAll();
+Project p=service.viewProject(projectId);
+		Date date=new Date();
+		Donation d=new Donation(s.getUser(), p, money, date);
+service.donate(projectId, s, d);
+		List<Project> l=service.viewAllProjects();
+				 
 		model.addAttribute("projects", l);
 		return "projects_template";
 	}
@@ -111,20 +88,17 @@ public class ProjectController {
 			@RequestParam String description,@RequestParam double totalBudget,@RequestParam double parcialBudget,
 			@RequestParam double time,@RequestParam String releaseDate,@RequestParam boolean opened,
 			@RequestParam int startYear,@RequestParam ("imagen") MultipartFile imagen){
-		
-		Date date= new Date();
+	Date date= new Date();
 		Project p= new Project(title, shortDescription, description, totalBudget, parcialBudget, time, true, date, startYear,"");
-		projects.save(p);
+service.addNewProject(p);
 		
 		String fileName = p.getId() + ".jpg";
 		if (!imagen.isEmpty()) {
 			try {
-
 				File filesFolder = new File(FILES_FOLDER_PROJECTS);
 				if (!filesFolder.exists()) {
 					filesFolder.mkdirs();
 				}
-
 				File uploadedFile = new File(filesFolder.getAbsolutePath(), fileName);
 				imagen.transferTo(uploadedFile);
 			}catch(IllegalStateException e){
@@ -135,12 +109,11 @@ public class ProjectController {
 			}
 		}
 		User u = (User) sesion.getAttribute("User");
-        model.addAttribute("bienvenido",u.getUser().getUserName());
-                return "Bootstrap-Admin-Theme/index";           //WE ARE OUT!
-		
-	}
+model.addAttribute("bienvenido",u.getUser().getUserName());
+return "Bootstrap-Admin-Theme/index";           //WE ARE OUT!
+}
 
-	  @RequestMapping("/imagep/{fileName}.jpg")
+@RequestMapping("/imagep/{fileName}.jpg")
 		public void handleFileDownload(@PathVariable String fileName,
 				HttpServletResponse res) throws FileNotFoundException, IOException {
 

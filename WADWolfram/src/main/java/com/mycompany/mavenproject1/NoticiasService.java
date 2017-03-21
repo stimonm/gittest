@@ -1,24 +1,11 @@
 ﻿package com.mycompany.mavenproject1;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.ArrayList;
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Service;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -46,68 +33,39 @@ public class NoticiasService {
         noticias.save(new Noticia("Noticia2", /*b,*/ "cuerpo2", 0, "eventos", coments, releaseDate));
     }
 
-    public ResponseEntity<ArrayList<Noticia>> mostrarPorCategoria(		@RequestParam String categoria) {
+    public  ArrayList mostrarPorCategoria(String categoria) {
         ArrayList<Noticia> l = noticias.findByCategoria(categoria);
-        if (!l.isEmpty())
-        	   return new ResponseEntity<>(l, HttpStatus.OK);
-        else
-        	  return new ResponseEntity<>(HttpStatus.NOT_FOUND);        	
+        return l;
     }
-
-    public List<Noticia> mostrarTodas(Model model) {
+        
+    public ArrayList<Noticia> mostrarTodas() {
         ArrayList<Noticia> l = noticias.findAll();
         return l;
     }
 
-    public ResponseEntity<Noticia> mostrarUna(@RequestParam long id) {
+    public Noticia mostrarUna(long id) {
         Noticia n = noticias.findOne(id);
-        if (n!=null)
-           return new ResponseEntity<>(n, HttpStatus.OK);
-        else
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return n;
     }
 
-    public ResponseEntity<Noticia> Comentar(HttpSession sesion, @RequestBody String comentario, @PathVariable long id) 
+    public Noticia comentar(User u, String comentario, long id){ 
         Noticia n = noticias.findOne(id);    //pillamos la noticia de la bd
         if (n!=null){
-           User s = (User) sesion.getAttribute("User");     
-           String nombre = s.user.getName();
+           String nombre = u.user.getName();
            nombre = nombre + " dice: \n" + comentario + "\n";
            n.getComentarios().add(nombre);
            n.setNumber_comments(n.getNumComentarios() + 1);
            noticias.save(n);
-           return new ResponseEntity<>(n, HttpStatus.OK);
-       }
-       else
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND);      
+           }
+        return n;
+   }
+
+    public Noticia addNewBlog(Noticia noticia){
+       
+    	noticias.save(noticia);                                                               //Añadimos la noticia a la bbdd
+     return noticia;
     }
-
-    @ResponseStatus(HttpStatus.CREATED)
-    public Noticia addNewBlog(@RequestBody noticia){
-        noticias.save(noticia);                                                               //Añadimos la noticia a la bbdd
-/*        String fileName = n.getId() + ".jpg";
-        if (!imagen.isEmpty()) {
-            try {
-
-                File filesFolder = new File(FILES_FOLDER);
-                if (!filesFolder.exists()) {
-                    filesFolder.mkdirs();
-                }
-
-                File uploadedFile = new File(filesFolder.getAbsolutePath(), fileName);
-                imagen.transferTo(uploadedFile);
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
- */       
-//falta devolver noticia con id
-      return noticia;
-    }
-
+/*
     public void handleFileDownload(@PathVariable String fileName,
             HttpServletResponse res) throws FileNotFoundException, IOException {
 
@@ -123,13 +81,12 @@ public class NoticiasService {
                     + ") does not exist");
         }
     }
-
-    @RequestMapping(value = "/borrarNoticia", method = RequestMethod.POST)
-    public String deleteProject(@RequestParam long id, Model m, HttpSession sesion) {
+*/
+    
+    public Noticia deleteNew(long id){
         Noticia n = noticias.findOne(id);
-        noticias.delete(n);
-        User u = (User) sesion.getAttribute("User");
-        m.addAttribute("bienvenido",u.getUser().getUserName());
-        return "Bootstrap-Admin-Theme/index";
+        if (n!=null)
+           noticias.delete(n);
+        return n;
     }
 }
